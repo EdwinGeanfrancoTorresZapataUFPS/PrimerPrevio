@@ -1,3 +1,5 @@
+
+mensajeDiv = document.getElementById("mensaje");
 document.getElementById("loginForm").addEventListener("submit", function(event) {
     event.preventDefault();
     
@@ -25,5 +27,6 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
     })
     .catch((error) => {
         console.error('Error:', error);
+        mensajeDiv.innerHTML = "Credenciales no validas";
     });
 });
