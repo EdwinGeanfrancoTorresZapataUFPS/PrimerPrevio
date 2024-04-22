@@ -1,25 +1,29 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const loginForm = document.getElementById("loginForm");
-    const errorMessage = document.getElementById("error-message");
-
-    loginForm.addEventListener("submit", function(event) {
-        event.preventDefault();
-        
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-
-        // Buscar en el JSON el usuario con el código proporcionado
-        const usuario = usuarios.find(user => user.codigo === username);
-
-        if (usuario && password === "1234") {
-            // Guardamos el usuario en el localStorage
-            localStorage.setItem("usuario", JSON.stringify(usuario));
-
-            // Redireccionamos a la página de notas
-            window.location.href = "notas.html";
-        } else {
-            errorMessage.style.display = "block";
-            loginForm.reset();
-        }
+document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+    
+    var data = {
+        "username": username,
+        "password": password
+    };
+    
+    fetch('https://24a0dac0-2579-4138-985c-bec2df4bdfcc-00-3unzo70c406dl.riker.replit.dev/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Guardar el usuario en el localStorage
+        localStorage.setItem('user', JSON.stringify(data));
+        // Redirigir a otra página o realizar otras acciones según sea necesario
+        window.location.href = 'notas.html'; // Cambiar 'otra_pagina.html' por la página que desees redirigir
+    })
+    .catch((error) => {
+        console.error('Error:', error);
     });
 });
